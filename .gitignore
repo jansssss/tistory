@@ -1,0 +1,4 @@
+auth.json
+.env
+output/
+node_modules/

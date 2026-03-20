@@ -1,0 +1,22 @@
+{
+  "name": "tistory-auto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scripts/pipeline.js",
+  "scripts": {
+    "auth": "node scripts/save-auth.js",
+    "pipeline": "node scripts/pipeline.js",
+    "list-topics": "node scripts/pipeline.js list-topics",
+    "preview": "node scripts/pipeline.js preview",
+    "publish": "node scripts/pipeline.js publish",
+    "publish:raw": "node scripts/publish-post.js",
+    "test": "node --check scripts/save-auth.js && node --check scripts/publish-post.js && node --check scripts/pipeline.js && node --check src/config.js && node --check src/topic-queue.js && node --check src/article-generator.js && node --check src/html-renderer.js && node --check src/tistory-client.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.58.2"
+  }
+}
