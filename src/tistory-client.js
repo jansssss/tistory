@@ -158,38 +158,20 @@ async function publishPost({ blogUrl, title, content, storageStatePath, headless
 
     await page.waitForTimeout(3000);
 
-    // 1단계: 저장
+    // 1단계: 완료
     await clickFirst(page, [
-      '.btn_save',
-      `button:has-text("저장")`,
-      `a:has-text("저장")`,
+      '.btn_complete',
+      `button:has-text("완료")`,
+      `a:has-text("완료")`,
     ]);
 
     await page.waitForTimeout(3000);
-    await page.screenshot({ path: 'output/debug-before-publish.png', fullPage: true });
 
-    // 2단계: 발행
+    // 2단계: 공개 발행
     const publishButtonSelector = await clickFirst(page, [
-      '.btn_publish',
-      `button:has-text("${UI_TEXT.publish}")`,
-      `a:has-text("${UI_TEXT.publish}")`,
-      `button:has-text("발행하기")`,
+      `button:has-text("${UI_TEXT.publicPublish}")`,
+      `button:has-text("공개 발행")`,
     ], 10000);
-
-    try {
-      await clickFirst(
-        page,
-        [
-          `button:has-text("${UI_TEXT.publicPublish}")`,
-          `button:has-text("${UI_TEXT.publish}")`,
-          `.layer_dialog button:has-text("${UI_TEXT.confirm}")`,
-          '.btn_layer',
-        ],
-        3000
-      );
-    } catch {
-      // Some editor flows publish immediately.
-    }
 
     await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => {});
 
