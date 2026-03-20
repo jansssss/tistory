@@ -156,6 +156,8 @@ async function publishPost({ blogUrl, title, content, storageStatePath, headless
 
     const contentStrategy = await setEditorContent(page, content);
 
+    await page.screenshot({ path: 'output/debug-before-publish.png', fullPage: true });
+
     const publishButtonSelector = await clickFirst(page, [
       '.btn_publish',
       `button:has-text("${UI_TEXT.publish}")`,
