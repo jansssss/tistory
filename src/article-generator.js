@@ -247,7 +247,7 @@ async function buildWithOpenAI(topic, promptText, options) {
     {
       model: options.model,
       reasoning: { effort: options.reasoningEffort },
-      max_output_tokens: 8000,
+      max_output_tokens: 16000,
       input,
       text: {
         format: {
