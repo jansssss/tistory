@@ -50,7 +50,7 @@ jobs:
 
       - name: Restore auth.json
         if: steps.check.outputs.pending_count != '0' || inputs.topic_id != ''
-        run: echo "$TISTORY_AUTH_JSON" > auth.json
+        run: python3 -c "import os; open('auth.json','w').write(os.environ['TISTORY_AUTH_JSON'])"
         env:
           TISTORY_AUTH_JSON: ${{ secrets.TISTORY_AUTH_JSON }}
 
