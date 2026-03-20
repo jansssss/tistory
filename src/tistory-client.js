@@ -156,19 +156,24 @@ async function publishPost({ blogUrl, title, content, storageStatePath, headless
 
     const contentStrategy = await setEditorContent(page, content);
 
-    await page.waitForTimeout(5000);
-    await page.screenshot({ path: 'output/debug-before-publish.png', fullPage: true });
-    const fs2 = require('node:fs');
-    fs2.writeFileSync('output/debug-page.html', await page.content(), 'utf8');
+    await page.waitForTimeout(3000);
 
+    // 1단계: 저장
+    await clickFirst(page, [
+      '.btn_save',
+      `button:has-text("저장")`,
+      `a:has-text("저장")`,
+    ]);
+
+    await page.waitForTimeout(3000);
+    await page.screenshot({ path: 'output/debug-before-publish.png', fullPage: true });
+
+    // 2단계: 발행
     const publishButtonSelector = await clickFirst(page, [
       '.btn_publish',
-      '.btn_submit',
       `button:has-text("${UI_TEXT.publish}")`,
       `a:has-text("${UI_TEXT.publish}")`,
       `button:has-text("발행하기")`,
-      `[class*="publish"]`,
-      `[class*="btn"][class*="submit"]`,
     ], 10000);
 
     try {
