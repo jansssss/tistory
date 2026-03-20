@@ -50,7 +50,7 @@ jobs:
 
       - name: Restore auth.json
         if: steps.check.outputs.pending_count != '0' || inputs.topic_id != ''
-        run: printf '%s' "$TISTORY_AUTH_JSON" | base64 -d > auth.json
+        run: printf '%s' "$TISTORY_AUTH_JSON" | tr -d '\n\r ' | base64 -d > auth.json
         env:
           TISTORY_AUTH_JSON: ${{ secrets.TISTORY_AUTH_JSON }}
 
@@ -74,7 +74,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add data/topics.csv
+          git add data/tistory_300.csv
           if ! git diff --staged --quiet; then
             git commit -m "chore: mark topic as published [skip ci]"
             git push
