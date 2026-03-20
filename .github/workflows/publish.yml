@@ -50,7 +50,7 @@ jobs:
 
       - name: Restore auth.json
         if: steps.check.outputs.pending_count != '0' || inputs.topic_id != ''
-        run: python3 -c "import os; open('auth.json','w').write(os.environ['TISTORY_AUTH_JSON'])"
+        run: python3 -c "import base64,os; open('auth.json','wb').write(base64.b64decode(os.environ['TISTORY_AUTH_JSON']))"
         env:
           TISTORY_AUTH_JSON: ${{ secrets.TISTORY_AUTH_JSON }}
 
@@ -70,7 +70,7 @@ jobs:
             node scripts/pipeline.js publish
           fi
 
-      - name: Commit updated topics.csv
+      - name: Commit updated tistory_300.csv
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
