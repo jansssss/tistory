@@ -50,7 +50,7 @@ jobs:
 
       - name: Restore auth.json
         if: steps.check.outputs.pending_count != '0' || inputs.topic_id != ''
-        run: printf '%s' "$TISTORY_AUTH_JSON" | tr -d '\n\r ' | base64 -d > auth.json
+        run: echo "$TISTORY_AUTH_JSON" > auth.json
         env:
           TISTORY_AUTH_JSON: ${{ secrets.TISTORY_AUTH_JSON }}
 
