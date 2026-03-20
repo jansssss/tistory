@@ -75,7 +75,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: debug-screenshot
-          path: output/debug-before-publish.png
+          path: |
+            output/debug-before-publish.png
+            output/debug-page.html
           if-no-files-found: ignore
 
       - name: Commit updated tistory_300.csv
