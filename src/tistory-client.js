@@ -139,8 +139,13 @@ async function publishPost({ blogUrl, title, content, storageStatePath, headless
   const page = await context.newPage();
 
   try {
-    await page.goto(`${blogUrl.replace(/\/+$/, '')}/manage/newpost`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${blogUrl.replace(/\/+$/, '')}/manage/newpost`, { waitUntil: 'load' });
     await dismissPopups(page);
+
+    const path = require('node:path');
+    fs.mkdirSync(path.join(process.cwd(), 'output'), { recursive: true });
+    await page.screenshot({ path: path.join(process.cwd(), 'output/debug-before-publish.png'), fullPage: true });
+    fs.writeFileSync(path.join(process.cwd(), 'output/debug-page.html'), await page.content(), 'utf8');
 
     const titleSelector = await fillFirst(
       page,
@@ -151,7 +156,8 @@ async function publishPost({ blogUrl, title, content, storageStatePath, headless
         `input[placeholder*="${UI_TEXT.title}"]`,
         `textarea[placeholder*="${UI_TEXT.title}"]`,
       ],
-      title
+      title,
+      15000
     );
 
     const contentStrategy = await setEditorContent(page, content);
